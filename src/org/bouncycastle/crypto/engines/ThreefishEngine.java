@@ -7,7 +7,7 @@ import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ThreefishParameters;
 
 /**
- * An implementation of Threefish encryption algorithm.
+ * An implementation of Threefish (1.3) encryption algorithm.
  * 
  * Threefish is tweakable block encryption algorithm designed by Bruce Schneier,
  * Niels Ferguson, Stefan Lucks, Doug Whiting, Mihir Bellare, Tadayoshi Kohno,
@@ -49,20 +49,21 @@ public class ThreefishEngine implements BlockCipher {
 	/**
 	 * Rotation constants for 1024 bits key
 	 */
-	private static final int[][] R_16 = { { 55, 43, 37, 40, 16, 22, 38, 12 }, { 25, 25, 46, 13, 14, 13, 52, 57 },
-			{ 33, 8, 18, 57, 21, 12, 32, 54 }, { 34, 43, 25, 60, 44, 9, 59, 34 }, { 28, 7, 47, 48, 51, 9, 35, 41 },
-			{ 17, 6, 18, 25, 43, 42, 40, 15 }, { 58, 7, 32, 45, 19, 18, 2, 56 }, { 47, 49, 27, 58, 37, 48, 53, 56 }, };
+	private static final int[][] R_16 = { { 24, 13, 8, 47, 8, 17, 22, 37 }, { 38, 19, 10, 55, 49, 18, 23, 52 },
+			{ 33, 4, 51, 13, 34, 41, 59, 17 }, { 5, 20, 48, 41, 47, 28, 16, 25 }, { 41, 9, 37, 31, 12, 47, 44, 30 },
+			{ 16, 34, 56, 51, 4, 53, 42, 41 }, { 31, 44, 47, 46, 19, 42, 44, 25 }, { 9, 48, 35, 52, 23, 31, 37, 20 } };
 
 	/**
 	 * Rotation constants for 256 bits key
 	 */
-	private static final int[][] R_4 = { { 5, 56 }, { 36, 28 }, { 13, 46 }, { 58, 44 }, { 26, 20 }, { 53, 35 }, { 11, 42 }, { 59, 50 } };
+	private static final int[][] R_4 = { { 14, 16 }, { 52, 57 }, { 23, 40 }, { 5, 37 }, { 25, 33 }, { 46, 12 }, { 58, 22 },
+			{ 32, 32 } };
 
 	/**
 	 * Rotation constants for 512 bits key
 	 */
-	private static final int[][] R_8 = { { 38, 30, 50, 53 }, { 48, 20, 43, 31 }, { 34, 14, 15, 27 }, { 26, 12, 58, 7 }, { 33, 49, 8, 42 },
-			{ 39, 27, 41, 14 }, { 29, 26, 11, 9 }, { 33, 51, 39, 35 } };
+	private static final int[][] R_8 = { { 46, 36, 19, 37 }, { 33, 27, 14, 42 }, { 17, 49, 36, 39 }, { 44, 9, 54, 56 },
+			{ 39, 30, 34, 24 }, { 13, 50, 10, 17 }, { 25, 29, 39, 43 }, { 8, 35, 56, 22 } };
 
 	public static long[] bytesToWords(byte[] ba, int length, int offset) {
 		long[] result = new long[length / 8];
@@ -105,8 +106,9 @@ public class ThreefishEngine implements BlockCipher {
 	private final int blockSize;
 
 	/**
-	 * Work mode.<br/> <code>true</code> for encryption<br/><code>false</code>
-	 * for decryption
+	 * Work mode.<br/>
+	 * <code>true</code> for encryption<br/>
+	 * <code>false</code> for decryption
 	 */
 	private boolean encryptMode;
 
@@ -354,7 +356,7 @@ public class ThreefishEngine implements BlockCipher {
 		final long[] T = bytesToWords(tweakData, 16, 0);
 		final long[] key = new long[Nw + 1];
 
-		long kNw = 6148914691236517205L;
+		long kNw = 0x1BD11BDAA9FC1A22l;
 		for (int i = 0; i < Nw; i++) {
 			kNw ^= K[i];
 			key[i] = K[i];
