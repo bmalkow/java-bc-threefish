@@ -1,7 +1,7 @@
 Threefish
 =========
 
-Java implementation of Threefish encryption algorithm for [Bouncycastle](http://www.bouncycastle.org/java.html)
+Java implementation of Threefish ver 1.3 encryption algorithm for [Bouncycastle](http://www.bouncycastle.org/java.html)
 
 Threefish is tweakable block encryption algorithm designed by Bruce Schneier, Niels Ferguson, Stefan Lucks, Doug Whiting, Mihir Bellare, Tadayoshi Kohno, Jon Callas, and Jesse Walker.
 
